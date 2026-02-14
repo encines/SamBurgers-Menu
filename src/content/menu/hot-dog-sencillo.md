@@ -1,6 +1,6 @@
 ---
-title: "Hot Dog Sencillo"
-price: 45
-description: Salchicha de pavo, tomate, cebolla, mostaza, catsup y mayonesa.
+title: "Sencillo"
+price: 65
+description: Salchicha, tocino, aderezo de la casa, tomate y cebolla.
 category: "Hot Dogs"
 ---

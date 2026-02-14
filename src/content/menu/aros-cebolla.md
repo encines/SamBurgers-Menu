@@ -1,6 +1,6 @@
 ---
-title: "Aros de Cebolla"
-price: 70
-description: Aros de cebolla empanizados y fritos crujientes.
+title: "Aros de Cebolla (3)"
+price: 20
+description: Tres Aros de Cebolla.
 category: "Extras"
 ---

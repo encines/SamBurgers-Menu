@@ -1,6 +1,6 @@
 ---
-title: "Coca Cola 600ml"
-price: 35
-description: Refresco de cola bien frío.
+title: "Coca Cola "
+price: 30
+description: Refresco de Coca Cola.
 category: "Bebidas"
 ---

@@ -1,6 +1,6 @@
 ---
-title: "Hot Dog Especial"
-price: 65
-description: Salchicha de res, tocino, queso, tomate, cebolla y aderezos.
+title: "Especial"
+price: 85
+description: Salchicha, tocino, aderezo de la casa, tomate, cebolla, guacamole y queso gratinado.
 category: "Hot Dogs"
 ---
