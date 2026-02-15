@@ -1,10 +1,40 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primario: #1e1b18; /* Títulos */
-  --color-fondo: #1a1a1a; /* Fondo oscuro */
-  --color-card: #2c2c2c; /* Tarjetas o secciones */
-  --color-titulo: #ffffff; /* Fondo oscuro */
-  --color-texto: #f5a623; /* Descripciones */
-  --color-acento: #c5a059; /* Bordes o detalles */
+  --color-fondo: #1a1a1a;
+  --color-card: #2a2622;
+  --color-titulo: #ffffff;
+  --color-texto: #a69b8f;
+  --color-acento: #f5a623;
+  --color-subtitulo: #f5cc27;
+
+  /* Mapeo para que funcionen las clases estándar copy-paste */
+  --color-background: var(--color-fondo);
+  --color-primary: var(--color-acento);
+  --color-foreground: var(--color-titulo);
+  --color-muted-foreground: var(--color-texto);
+
+  /* Fuente correcta estilo menú */
+  --font-menu: "Bebas Neue", sans-serif;
+  --font-cuerpo: "Nunito Sans", sans-serif;
+}
+
+/* Aplicamos a los títulos de los platillos */
+h2 {
+  font-family: var(--font-menu);
+  font-weight: 1000;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.1em;
+  color: var(--color-subtitulo);
+}
+/* Para las descripciones */
+p {
+  font-family: var(--font-cuerpo);
+  font-size: 0.9rem;
+}
+body {
+  /* IMPORTANTE: Tienes que envolver la variable en hsl() manualmente */
+  background-color: hsl(var(--background));
+  color: white;
 }

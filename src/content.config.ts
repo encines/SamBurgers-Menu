@@ -7,7 +7,14 @@ const menu = defineCollection({
     title: z.string(),
     price: z.number().positive(),
     description: z.string(),
-    category: z.enum(["Hamburguesas", "Hot Dogs", "Otros", "Bebidas", "Extras"]),
+    category: z.enum([
+      "Hamburguesas",
+      "Hot Dogs",
+      "Otros",
+      "Bebidas",
+      "Extras",
+    ]),
+    img: z.string().optional(),
   }),
 });
 
