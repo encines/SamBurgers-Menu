@@ -5,25 +5,40 @@ import Botones from "./Botones.astro";
 
 // Definimos el orden deseado
 const categoryOrder = ["Hamburguesas", "Hot Dogs", "Bebidas", "Extras"];
+const allDishes = await getCollection("menu");
 
-const menu = (await getCollection("menu")).sort((a, b) => {
-  const indexA = categoryOrder.indexOf(a.data.category);
-  const indexB = categoryOrder.indexOf(b.data.category);
+// Agrupar platos por categoría
+const groupedMenu = categoryOrder.reduce(
+  (acc, category) => {
+    const dishes = allDishes.filter((dish) => dish.data.category === category);
+    if (dishes.length > 0) {
+      acc[category] = dishes;
+    }
+    return acc;
+  },
+  {} as Record<string, typeof allDishes>,
+);
 
-  // Si ambos elementos están en la lista de orden, se comparan sus índices
-  if (indexA !== -1 && indexB !== -1) {
-    return indexA - indexB;
-  }
+// Agregar categorías que no estén en el orden predefinido al final
+const otherCategories = allDishes.filter(
+  (dish) => !categoryOrder.includes(dish.data.category),
+);
 
-  // Si solo 'a' está en la lista, va primero
-  if (indexA !== -1) return -1;
+if (otherCategories.length > 0) {
+  const others = otherCategories.reduce(
+    (acc, dish) => {
+      const category = dish.data.category;
+      if (!acc[category]) {
+        acc[category] = [];
+      }
+      acc[category].push(dish);
+      return acc;
+    },
+    {} as Record<string, typeof allDishes>,
+  );
 
-  // Si solo 'b' está en la lista, 'b' va primero (a va después)
-  if (indexB !== -1) return 1;
-
-  // Si ninguno está en la lista, se mantiene el orden o se podría ordenar alfabéticamente
-  return 0;
-});
+  Object.assign(groupedMenu, others);
+}
 ---
 
 <main class="bg-fondo min-h-screen p-8">
@@ -34,52 +49,62 @@ const menu = (await getCollection("menu")).sort((a, b) => {
   <div class="container mx-auto max-w-5xl">
     <!-- Filtros de Categoría -->
     <Botones />
-    <div class="grid gap-4 md:grid-cols-2" id="menu-container">
+
+    <div id="menu-container">
       {
-        menu.map((dishes: (typeof menu)[0]) => {
-          const { title, price, description, category, img } = dishes.data;
-          return (
-            <article
-              class="menu-item group relative bg-[#121212] border border-white/5 rounded-2xl p-5 transition-all duration-300 ease-out hover:border-amber-500/50 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.7)] fade-in"
-              data-category={category}
-            >
-              <div class="absolute -top-3 -right-2 tracking-tighter shadow-lg">
-                <span class="bg-amber-500 text-black text-[12px] font-black px-3 py-1 rounded-md uppercase ">
-                  {category}
-                </span>
-              </div>
+        Object.entries(groupedMenu).map(([category, dishes]) => (
+          <section
+            id={category.toLowerCase().replace(/\s+/g, "-")}
+            class="mb-12 category-section scroll-mt-32"
+            data-category={category}
+          >
+            <h2 class="text-3xl font-bold text-amber-500 mb-6 border-b border-white/10 pb-2 uppercase">
+              {category}
+            </h2>
+            <div class="grid gap-4 md:grid-cols-2 items-start">
+              {dishes.map((dish) => {
+                const { title, price, description, img } = dish.data;
+                return (
+                  <article
+                    class="menu-item group relative bg-[#121212] border border-white/5 rounded-2xl p-5 transition-all duration-300 ease-out hover:border-amber-500/50 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.7)] fade-in flex flex-col"
+                    data-category={category}
+                  >
+                    <div class="flex flex-col h-full">
+                      <h2 class="text-2xl font-black mb-3 leading-none text-white uppercase group-hover:text-amber-500 transition-colors">
+                        {title}
+                      </h2>
 
-              <div class="flex flex-col h-full">
-                <h2 class="text-2xl font-black mb-3 leading-none text-white uppercase group-hover:text-amber-500 transition-colors">
-                  {title}
-                </h2>
+                      <p class="text-sm text-zinc-400 leading-relaxed mb-6 group-open:grow">
+                        {description}
+                      </p>
 
-                <p class="text-sm text-zinc-400 leading-relaxed mb-6 grow">
-                  {description}
-                </p>
+                      {img && img.trim() !== "" && (
+                        <div class="mb-4 overflow-hidden rounded-lg">
+                          <img
+                            src={img}
+                            alt={title}
+                            class="w-full h-full object-fit transition-transform duration-500 group-hover:scale-110"
+                          />
+                        </div>
+                      )}
 
-                {img && img.trim() !== "" && (
-                  <div class="mb-4 overflow-hidden rounded-lg">
-                    <img
-                      src={img}
-                      alt={title}
-                      class="w-full h-full object-fit transition-transform duration-500 group-hover:scale-110"
-                    />
-                  </div>
-                )}
-
-                <div class="flex justify-between items-center pt-4 border-t border-white/10">
-                  <div class="flex flex-col">
-                    <span class="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">
-                      Precio
-                    </span>
-                    <span class="text-2xl font-black text-white">${price}</span>
-                  </div>
-                </div>
-              </div>
-            </article>
-          );
-        })
+                      <div class="mt-auto pt-4 border-t border-white/10 flex justify-between items-center">
+                        <div class="flex flex-col">
+                          <span class="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">
+                            Precio
+                          </span>
+                          <span class="text-2xl font-black text-white">
+                            ${price}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        ))
       }
     </div>
   </div>

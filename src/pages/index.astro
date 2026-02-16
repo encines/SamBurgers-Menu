@@ -52,7 +52,6 @@ const menu = await getCollection("menu");
 
       <script>
         const buttons = document.querySelectorAll(".filter-btn");
-        const items = document.querySelectorAll(".menu-item");
 
         const activeClasses = [
           "bg-amber-500",
@@ -69,32 +68,18 @@ const menu = await getCollection("menu");
           "text-zinc-400",
           "border-transparent",
         ];
+
         buttons.forEach((button) => {
           button.addEventListener("click", () => {
-            // Remover clase activa de todos los botones
+            // Remover destaque de todos
             buttons.forEach((btn) => {
               btn.classList.remove(...activeClasses);
               btn.classList.add(...inactiveClasses);
             });
 
-            // Agregar clase activa al botón presionado
+            // Destacar botón presionado
             button.classList.remove(...inactiveClasses);
             button.classList.add(...activeClasses);
-
-            const filterValue = button.getAttribute("data-filter");
-
-            items.forEach((item) => {
-              if (
-                filterValue === "all" ||
-                item.getAttribute("data-category") === filterValue
-              ) {
-                item.classList.remove("hidden");
-                item.classList.add("fade-in");
-              } else {
-                item.classList.add("hidden");
-                item.classList.remove("fade-in");
-              }
-            });
           });
         });
       </script>
