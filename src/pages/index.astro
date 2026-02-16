@@ -49,40 +49,6 @@ const menu = await getCollection("menu");
       <WhatsappBtn />
       <Main />
       <Footer />
-
-      <script>
-        const buttons = document.querySelectorAll(".filter-btn");
-
-        const activeClasses = [
-          "bg-amber-500",
-          "text-black",
-          "ring-2",
-          "ring-amber-500",
-          "ring-offset-2",
-          "ring-offset-[#141210]",
-          "active",
-          "shadow-[0_0_15px_rgba(245,158,11,0.4)]",
-        ];
-        const inactiveClasses = [
-          "bg-zinc-800",
-          "text-zinc-400",
-          "border-transparent",
-        ];
-
-        buttons.forEach((button) => {
-          button.addEventListener("click", () => {
-            // Remover destaque de todos
-            buttons.forEach((btn) => {
-              btn.classList.remove(...activeClasses);
-              btn.classList.add(...inactiveClasses);
-            });
-
-            // Destacar botón presionado
-            button.classList.remove(...inactiveClasses);
-            button.classList.add(...activeClasses);
-          });
-        });
-      </script>
     </div>
   </body>
 </html>

@@ -2,7 +2,13 @@
 import { getCollection } from "astro:content";
 import Botones from "./Botones.astro";
 
-const categoryOrder = ["Hamburguesas", "Hot Dogs", "Bebidas", "Extras"];
+const categoryOrder = [
+  "Hamburguesas",
+  "Hot Dogs",
+  "Bebidas",
+  "Otros",
+  "Extras",
+];
 const allDishes = await getCollection("menu");
 
 const sortedDishes = allDishes.sort((a, b) => {
@@ -13,7 +19,9 @@ const sortedDishes = allDishes.sort((a, b) => {
 
 const groupedMenu = categoryOrder.reduce(
   (acc, category) => {
-    const dishes = sortedDishes.filter((dish) => dish.data.category === category);
+    const dishes = sortedDishes.filter(
+      (dish) => dish.data.category === category,
+    );
     if (dishes.length > 0) {
       acc[category] = dishes;
     }
