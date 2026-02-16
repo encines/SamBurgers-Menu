@@ -15,6 +15,7 @@ const menu = defineCollection({
       "Extras",
     ]),
     img: z.string().optional(),
+    order: z.number().optional(),
   }),
 });
 

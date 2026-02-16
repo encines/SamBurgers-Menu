@@ -1,6 +1,7 @@
 ---
 title: "Gratinado"
 price: 10
+order: 3
 description: Queso derretido.
 category: "Extras"
 ---

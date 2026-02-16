@@ -1,16 +1,19 @@
 ---
-import { SITE_TITLE } from "../consts";
 import { getCollection } from "astro:content";
 import Botones from "./Botones.astro";
 
-// Definimos el orden deseado
 const categoryOrder = ["Hamburguesas", "Hot Dogs", "Bebidas", "Extras"];
 const allDishes = await getCollection("menu");
 
-// Agrupar platos por categoría
+const sortedDishes = allDishes.sort((a, b) => {
+  const orderA = a.data.order ?? 99;
+  const orderB = b.data.order ?? 99;
+  return orderA - orderB;
+});
+
 const groupedMenu = categoryOrder.reduce(
   (acc, category) => {
-    const dishes = allDishes.filter((dish) => dish.data.category === category);
+    const dishes = sortedDishes.filter((dish) => dish.data.category === category);
     if (dishes.length > 0) {
       acc[category] = dishes;
     }
@@ -19,8 +22,7 @@ const groupedMenu = categoryOrder.reduce(
   {} as Record<string, typeof allDishes>,
 );
 
-// Agregar categorías que no estén en el orden predefinido al final
-const otherCategories = allDishes.filter(
+const otherCategories = sortedDishes.filter(
   (dish) => !categoryOrder.includes(dish.data.category),
 );
 
@@ -36,7 +38,6 @@ if (otherCategories.length > 0) {
     },
     {} as Record<string, typeof allDishes>,
   );
-
   Object.assign(groupedMenu, others);
 }
 ---
@@ -47,7 +48,6 @@ if (otherCategories.length > 0) {
   </h1>
 
   <div class="container mx-auto max-w-5xl">
-    <!-- Filtros de Categoría -->
     <Botones />
 
     <div id="menu-container">
@@ -73,11 +73,9 @@ if (otherCategories.length > 0) {
                       <h2 class="text-2xl font-black mb-3 leading-none text-white uppercase group-hover:text-amber-500 transition-colors">
                         {title}
                       </h2>
-
-                      <p class="text-sm text-zinc-400 leading-relaxed mb-6 group-open:grow">
+                      <p class="text-sm text-zinc-400 leading-relaxed mb-6">
                         {description}
                       </p>
-
                       {img && img.trim() !== "" && (
                         <div class="mb-4 overflow-hidden rounded-lg">
                           <img
@@ -87,7 +85,6 @@ if (otherCategories.length > 0) {
                           />
                         </div>
                       )}
-
                       <div class="mt-auto pt-4 border-t border-white/10 flex justify-between items-center">
                         <div class="flex flex-col">
                           <span class="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">

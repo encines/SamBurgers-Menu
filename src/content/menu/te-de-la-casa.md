@@ -1,6 +1,7 @@
 ---
 title: "Te De La Casa "
 price: 30
+order: 2
 description: Te De La Casa.
 category: "Bebidas"
 ---

@@ -1,6 +1,7 @@
 ---
 title: "Papas (extra)"
 price: 10
+order: 4
 description: Extra de papas.
 category: "Extras"
 ---

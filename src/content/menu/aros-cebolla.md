@@ -1,6 +1,7 @@
 ---
 title: "Aros de Cebolla (3)"
 price: 20
+order: 2
 description: Tres Aros de Cebolla.
 category: "Extras"
 ---

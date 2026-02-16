@@ -1,6 +1,7 @@
 ---
 title: "Agua Fresa Limón "
 price: 30
+order: 1
 description: Bebida de Agua Fresa Limón.
 category: "Bebidas"
 ---
