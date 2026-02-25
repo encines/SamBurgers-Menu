@@ -2,6 +2,6 @@
 title: "ESPECIAL"
 price: 165
 order: 2
-description: Doble carne molida con tocino, doble queso, aderezo de la casa, guacamole, tomate, cebolla y lechuga.
+description: Doble Medallón de carne molida hecho en casa con tocino, doble queso, aderezo de la casa, guacamole, tomate, cebolla y lechuga.
 category: "Hamburguesas"
 ---
